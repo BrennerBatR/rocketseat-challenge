@@ -11,7 +11,7 @@ import {
 import { IsString, IsUUID } from 'class-validator';
 import { Field, ObjectType } from '@nestjs/graphql';
 
-export enum StatusEnum {
+export enum SubmissionStatus {
   Pending = 'Pending',
   Error = 'Error',
   Done = 'Done',
@@ -44,9 +44,9 @@ export class Submission extends BaseEntity {
   @Column({ length: 100 })
   repositoryUrl: string;
 
-  @ApiProperty({ enum: StatusEnum })
+  @ApiProperty({ enum: SubmissionStatus })
   @Field()
-  @Column({ length: 10, default: StatusEnum.Pending })
+  @Column({ length: 10, default: SubmissionStatus.Pending })
   status: string;
 
   @ApiProperty()

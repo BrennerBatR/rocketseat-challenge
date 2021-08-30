@@ -2,11 +2,11 @@ import { Inject, OnModuleInit } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { ClientKafka } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
-import { Submission } from './entity/submission.entity';
+import { Submission, SubmissionStatus } from './entity/submission.entity';
 import { CreateSubmisionDTO } from './submission.dto';
 import { SubmissionService } from './submission.service';
 
-@Resolver((of) => Submission)
+@Resolver()
 export class SubmissionResolver implements OnModuleInit {
   pattern: string;
   constructor(
@@ -33,7 +33,8 @@ export class SubmissionResolver implements OnModuleInit {
     @Args('submission') submissionDto: CreateSubmisionDTO,
   ): Promise<Submission> {
     const submission = await this.submissionService.create(submissionDto);
-    this.getCorrection(submission);
+    if (submission.status !== SubmissionStatus.Error)
+      this.getCorrection(submission);
     return submission;
   }
 

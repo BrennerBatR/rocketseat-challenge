@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Submission } from './entity/submission.entity';
+import { Submission, SubmissionStatus } from './entity/submission.entity';
 import { CreateSubmisionDTO } from './submission.dto';
 
 @Injectable()
@@ -20,7 +20,18 @@ export class SubmissionService {
   }
 
   async create(submission: CreateSubmisionDTO): Promise<Submission> {
-    return await this.submissionRepository.create({ ...submission }).save();
+    let status = SubmissionStatus.Pending;
+
+    if (!submission.repositoryUrl.match(/github.com/))
+      status = SubmissionStatus.Error;
+    else if (
+      submission.repositoryUrl.split('github.com/')[1].split('/').length !== 2
+    )
+      status = SubmissionStatus.Error;
+
+    return await this.submissionRepository
+      .create({ ...submission, status })
+      .save();
   }
 
   async update(submission: Submission): Promise<Submission> {
