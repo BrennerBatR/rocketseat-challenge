@@ -7,9 +7,9 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { IsString, IsUUID } from 'class-validator';
+import { IsString } from 'class-validator';
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Challenge } from 'src/challenge/entity/challenge.entity';
+import { Challenge } from '../../challenge/entity/challenge.entity';
 
 export enum SubmissionStatus {
   Pending = 'Pending',

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ChallengeService } from 'src/challenge/challenge.service';
+import { ChallengeService } from '../challenge/challenge.service';
 import { Between, FindConditions, Repository } from 'typeorm';
 import { Submission, SubmissionStatus } from './entity/submission.entity';
 import { CreateSubmissionDTO } from './submission.dto';

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ChallengeModule } from 'src/challenge/challenge.module';
+import { ChallengeModule } from '../challenge/challenge.module';
 import { Submission } from './entity/submission.entity';
 import { SubmissionResolver } from './submission.resolver';
 import { SubmissionService } from './submission.service';

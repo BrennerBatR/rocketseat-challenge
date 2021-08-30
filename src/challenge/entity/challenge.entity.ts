@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { IsString } from 'class-validator';
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Submission } from 'src/submission/entity/submission.entity';
+import { Submission } from '../../submission/entity/submission.entity';
 
 @ObjectType()
 @Entity()
