@@ -51,7 +51,7 @@ export class Submission extends BaseEntity {
 
   @ApiProperty()
   @Field()
-  @Column({ type: 'double precision' })
+  @Column({ type: 'double precision', default: null })
   grade: number;
 
   @ApiProperty()
