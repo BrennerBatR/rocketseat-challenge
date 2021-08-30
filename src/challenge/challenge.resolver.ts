@@ -1,5 +1,4 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { DeleteResult } from 'typeorm';
 import { CreateChallengeDTO, UpdateChallengeDTO } from './challenge.dto';
 import { ChallengeService } from './challenge.service';
 import { Challenge } from './entity/challenge.entity';

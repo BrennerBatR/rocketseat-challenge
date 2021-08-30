@@ -1,6 +1,6 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, FindConditions, ILike, Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { CreateChallengeDTO, UpdateChallengeDTO } from './challenge.dto';
 import { Challenge } from './entity/challenge.entity';
 @Injectable()
