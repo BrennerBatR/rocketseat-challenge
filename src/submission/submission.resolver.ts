@@ -21,6 +21,7 @@ export class SubmissionResolver {
   async createSubmission(
     @Args('submission') submission: CreateSubmisionDTO,
   ): Promise<Submission> {
-    return await this.submissionService.create(submission);
+    let grade = 10;
+    return await this.submissionService.create(submission, grade);
   }
 }

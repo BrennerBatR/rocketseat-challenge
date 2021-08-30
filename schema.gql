@@ -3,6 +3,9 @@
 # ------------------------------------------------------
 
 type Submission {
+  id: String!
+  createDate: String!
+  updateDate: String!
   repositoryUrl: String!
   status: String!
   grade: Float!

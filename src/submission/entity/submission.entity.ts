@@ -1,6 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { BaseCollection } from 'src/common/base.entity';
-import { Column, Entity } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { IsString, IsUUID } from 'class-validator';
 import { Field, ObjectType } from '@nestjs/graphql';
 
@@ -12,7 +19,25 @@ export enum StatusEnum {
 
 @ObjectType()
 @Entity()
-export class Submission extends BaseCollection {
+export class Submission extends BaseEntity {
+  @ApiProperty()
+  @Field()
+  @PrimaryGeneratedColumn('uuid', { name: 'id' })
+  id: string;
+
+  @ApiProperty()
+  @Field()
+  @CreateDateColumn({
+    type: 'timestamp',
+  })
+  createDate: string;
+
+  @ApiProperty()
+  @Field()
+  @UpdateDateColumn({
+    type: 'timestamp',
+  })
+  updateDate: string;
   @ApiProperty()
   @IsString()
   @Field()

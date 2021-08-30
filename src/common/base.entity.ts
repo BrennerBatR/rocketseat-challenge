@@ -27,9 +27,4 @@ export abstract class BaseCollection extends BaseEntity {
     type: 'timestamp',
   })
   updateDate: string;
-
-  @ApiProperty()
-  @Field()
-  @Column({ type: 'bool', name: 'active', default: true })
-  active: boolean;
 }

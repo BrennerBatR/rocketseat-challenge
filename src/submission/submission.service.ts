@@ -19,7 +19,12 @@ export class SubmissionService {
     return await this.submissionRepository.findOne();
   }
 
-  async create(submission: CreateSubmisionDTO): Promise<Submission> {
-    return await this.submissionRepository.create(submission).save();
+  async create(
+    submission: CreateSubmisionDTO,
+    grade: number,
+  ): Promise<Submission> {
+    return await this.submissionRepository
+      .create({ ...submission, grade })
+      .save();
   }
 }
