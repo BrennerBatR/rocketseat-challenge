@@ -1,6 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import {
+  Between,
+  FindConditions,
+  LessThan,
+  LessThanOrEqual,
+  MoreThan,
+  Repository,
+} from 'typeorm';
 import { Submission, SubmissionStatus } from './entity/submission.entity';
 import { CreateSubmisionDTO } from './submission.dto';
 
@@ -11,8 +18,23 @@ export class SubmissionService {
     private readonly submissionRepository: Repository<Submission>,
   ) {}
 
-  async find(): Promise<Submission[]> {
-    return await this.submissionRepository.find();
+  async find(
+    take: number,
+    skip: number,
+    status?: SubmissionStatus,
+    dateStart?: string,
+    dateEnd?: string,
+  ): Promise<Submission[]> {
+    const findConditions: FindConditions<Submission> = {};
+    if (status) findConditions.status = status;
+    if (dateStart) findConditions.createDate = Between(dateStart, dateEnd);
+
+    return await this.submissionRepository.find({
+      where: findConditions,
+      take,
+      skip,
+      order: { createDate: 'DESC' },
+    });
   }
 
   async findOne(id: string): Promise<Submission> {

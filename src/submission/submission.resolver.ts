@@ -1,12 +1,28 @@
 import { Inject, OnModuleInit } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { ClientKafka } from '@nestjs/microservices';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { lastValueFrom } from 'rxjs';
 import { Submission, SubmissionStatus } from './entity/submission.entity';
 import { CreateSubmisionDTO } from './submission.dto';
 import { SubmissionService } from './submission.service';
 
+interface CorrectLessonMessage {
+  value: {
+    submissionId: string;
+    repositoryUrl: string;
+  };
+}
+
+interface CorrectLessonResponse {
+  submissionId: string;
+  repositoryUrl: string;
+  grade: number;
+  status: 'Pending' | 'Error' | 'Done';
+}
+
 @Resolver()
+@ApiTags('Submission')
 export class SubmissionResolver implements OnModuleInit {
   pattern: string;
   constructor(
@@ -19,8 +35,14 @@ export class SubmissionResolver implements OnModuleInit {
   }
 
   @Query(() => [Submission])
-  public async getAllSubmissions(): Promise<Submission[]> {
-    return this.submissionService.find();
+  public async getAllSubmissions(
+    @Args('status') status?: SubmissionStatus,
+    @Args('dateStart') dateStart?: string,
+    @Args('dateEnd') dateEnd?: string,
+    @Args('take') take: number = 10,
+    @Args('skip') skip: number = 0,
+  ): Promise<Submission[]> {
+    return this.submissionService.find(take, skip, status, dateStart, dateEnd);
   }
 
   @Query((returns) => Submission)
@@ -39,15 +61,19 @@ export class SubmissionResolver implements OnModuleInit {
   }
 
   async getCorrection(submission: Submission) {
-    const result = await lastValueFrom(
+    const correctLessonMessage: CorrectLessonMessage = {
+      value: {
+        submissionId: submission.id,
+        repositoryUrl: submission.repositoryUrl,
+      },
+    };
+
+    const result: CorrectLessonResponse = await lastValueFrom(
       this.clientKafka.send(
         this.pattern,
         JSON.stringify({
-          key: submission.id,
-          value: JSON.stringify({
-            submissionId: submission.id,
-            repositoryUrl: submission.repositoryUrl,
-          }),
+          key: correctLessonMessage.value.submissionId,
+          value: JSON.stringify(correctLessonMessage.value),
         }),
       ),
     );

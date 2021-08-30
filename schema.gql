@@ -13,7 +13,7 @@ type Submission {
 }
 
 type Query {
-  getAllSubmissions: [Submission!]!
+  getAllSubmissions(skip: Float!, take: Float!, dateEnd: String!, dateStart: String!, status: String!): [Submission!]!
   getSubmissionById(id: String!): Submission!
 }
 

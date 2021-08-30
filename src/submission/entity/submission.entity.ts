@@ -1,5 +1,3 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { BaseCollection } from 'src/common/base.entity';
 import {
   BaseEntity,
   Column,
@@ -20,41 +18,35 @@ export enum SubmissionStatus {
 @ObjectType()
 @Entity()
 export class Submission extends BaseEntity {
-  @ApiProperty()
   @Field()
   @PrimaryGeneratedColumn('uuid', { name: 'id' })
   id: string;
 
-  @ApiProperty()
   @Field()
   @CreateDateColumn({
     type: 'timestamp',
   })
   createDate: string;
 
-  @ApiProperty()
   @Field()
   @UpdateDateColumn({
     type: 'timestamp',
   })
   updateDate: string;
-  @ApiProperty()
+
   @IsString()
   @Field()
   @Column({ length: 100 })
   repositoryUrl: string;
 
-  @ApiProperty({ enum: SubmissionStatus })
   @Field()
   @Column({ length: 10, default: SubmissionStatus.Pending })
   status: string;
 
-  @ApiProperty()
   @Field()
-  @Column({ type: 'double precision', default: null })
+  @Column({ type: 'double precision', default: 0 })
   grade: number;
 
-  @ApiProperty()
   @IsUUID()
   @Field()
   @Column()
