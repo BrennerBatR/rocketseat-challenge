@@ -1,5 +1,6 @@
 import { InputType, Field, OmitType } from '@nestjs/graphql';
 import { ApiProperty } from '@nestjs/swagger';
+import { IsUUID } from 'class-validator';
 import { Submission } from './entity/submission.entity';
 
 @InputType()
@@ -15,6 +16,7 @@ export class CreateSubmisionDTO extends OmitType(Submission, [
   repositoryUrl: string;
 
   @ApiProperty()
+  @IsUUID()
   @Field()
   challengeId: string;
 }

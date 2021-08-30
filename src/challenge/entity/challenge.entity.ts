@@ -39,7 +39,7 @@ export class Challenge extends BaseEntity {
   @Column({ type: 'text' })
   description: string;
 
-  @Field((type) => [Submission], { nullable: true })
+/*   @Field((type) => [Submission], { nullable: true })
   @OneToMany((type) => Submission, (submission) => submission.challenge)
-  submissions: Submission[];
+  submissions: Submission[]; */
 }

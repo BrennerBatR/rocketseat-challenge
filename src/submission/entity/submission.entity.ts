@@ -50,7 +50,12 @@ export class Submission extends BaseEntity {
   grade: number;
 
   @IsUUID()
+  @Field()
+  @Column()
+  challengeId: string;
+
+  /*   @IsUUID()
   @Field((type) => Challenge)
   @ManyToOne((type) => Challenge, (challenge) => challenge.submissions)
-  challenge: Challenge;
+  challenge: Challenge; */
 }
