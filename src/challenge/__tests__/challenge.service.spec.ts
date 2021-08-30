@@ -10,7 +10,6 @@ describe('ChallengeService', () => {
   let repositoryMock: MockType<Repository<Challenge>>;
 
   beforeAll(async () => {
-    // dotenvyml.config();
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         ChallengeService,
