@@ -1,0 +1,24 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Submission {
+  repositoryUrl: String!
+  status: String!
+  grade: Float!
+  challengeId: String!
+}
+
+type Query {
+  getAllSubmissions: [Submission!]!
+  getSubmissionById(id: String!): Submission!
+}
+
+type Mutation {
+  createSubmission(submission: CreateSubmisionDTO!): Submission!
+}
+
+input CreateSubmisionDTO {
+  repositoryUrl: String!
+  challengeId: String!
+}
