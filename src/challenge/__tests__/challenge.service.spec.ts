@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { mockedChallenge, MockType, repositoryMockFactory } from '../../mock';
+import { mockedChallenge, MockType, repositoryMockFactory } from '../../../test/mock';
 import { ChallengeService } from '../challenge.service';
 import { Challenge } from '../entity/challenge.entity';
 

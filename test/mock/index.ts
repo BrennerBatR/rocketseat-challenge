@@ -1,11 +1,11 @@
-import { Challenge } from '../challenge/entity/challenge.entity';
+import { Challenge } from '../../src/challenge/entity/challenge.entity';
 import {
   Submission,
   SubmissionStatus,
-} from '../submission/entity/submission.entity';
+} from '../../src/submission/entity/submission.entity';
 import { Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
-import { CreateSubmissionDTO } from '../submission/submission.dto';
+import { CreateSubmissionDTO } from '../../src/submission/submission.dto';
 
 export type MockType<T> = {
   [P in keyof T]: jest.Mock<{}>;

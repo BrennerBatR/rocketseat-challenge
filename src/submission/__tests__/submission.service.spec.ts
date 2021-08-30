@@ -7,7 +7,7 @@ import {
   mockedSubmission,
   MockType,
   repositoryMockFactory,
-} from '../../mock';
+} from '../../../test/mock';
 import { SubmissionService } from '../submission.service';
 import { Submission, SubmissionStatus } from '../entity/submission.entity';
 import { CreateSubmissionDTO } from '../submission.dto';
