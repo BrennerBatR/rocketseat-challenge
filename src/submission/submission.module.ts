@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ChallengeModule } from 'src/challenge/challenge.module';
 import { Submission } from './entity/submission.entity';
 import { SubmissionResolver } from './submission.resolver';
 import { SubmissionService } from './submission.service';
@@ -22,6 +23,7 @@ import { SubmissionService } from './submission.service';
         },
       },
     ]),
+    ChallengeModule,
   ],
   controllers: [],
   providers: [SubmissionService, SubmissionResolver],

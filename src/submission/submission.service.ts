@@ -1,19 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import {
-  Between,
-  FindConditions,
-  LessThan,
-  LessThanOrEqual,
-  MoreThan,
-  Repository,
-} from 'typeorm';
+import { ChallengeService } from 'src/challenge/challenge.service';
+import { Between, FindConditions, Repository } from 'typeorm';
 import { Submission, SubmissionStatus } from './entity/submission.entity';
-import { CreateSubmisionDTO } from './submission.dto';
+import { CreateSubmissionDTO } from './submission.dto';
 
 @Injectable()
 export class SubmissionService {
   constructor(
+    private readonly challengeService: ChallengeService,
+
     @InjectRepository(Submission)
     private readonly submissionRepository: Repository<Submission>,
   ) {}
@@ -38,10 +34,10 @@ export class SubmissionService {
   }
 
   async findOne(id: string): Promise<Submission> {
-    return await this.submissionRepository.findOne();
+    return await this.submissionRepository.findOne(id);
   }
 
-  async create(submission: CreateSubmisionDTO): Promise<Submission> {
+  async create(submission: CreateSubmissionDTO): Promise<Submission> {
     let status = SubmissionStatus.Pending;
 
     if (!submission.repositoryUrl.match(/github.com/))
@@ -51,8 +47,14 @@ export class SubmissionService {
     )
       status = SubmissionStatus.Error;
 
+    const challenge = await this.challengeService.findOne(
+      submission.challengeId,
+    );
+
+    if (!challenge) status = SubmissionStatus.Error;
+
     return await this.submissionRepository
-      .create({ ...submission, status })
+      .create({ ...submission, status, challenge })
       .save();
   }
 

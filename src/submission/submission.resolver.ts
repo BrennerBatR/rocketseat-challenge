@@ -1,10 +1,10 @@
 import { Inject, OnModuleInit } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { ClientKafka } from '@nestjs/microservices';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import { lastValueFrom } from 'rxjs';
 import { Submission, SubmissionStatus } from './entity/submission.entity';
-import { CreateSubmisionDTO } from './submission.dto';
+import { CreateSubmissionDTO } from './submission.dto';
 import { SubmissionService } from './submission.service';
 
 interface CorrectLessonMessage {
@@ -34,6 +34,16 @@ export class SubmissionResolver implements OnModuleInit {
     this.pattern = 'challenge.correction';
   }
 
+  @Mutation((returns) => Submission)
+  async answerChallenge(
+    @Args('submission') submissionDto: CreateSubmissionDTO,
+  ): Promise<Submission> {
+    const submission = await this.submissionService.create(submissionDto);
+    if (submission.status !== SubmissionStatus.Error)
+      this.getCorrection(submission);
+    return submission;
+  }
+
   @Query(() => [Submission])
   public async getAllSubmissions(
     @Args('status') status?: SubmissionStatus,
@@ -48,16 +58,6 @@ export class SubmissionResolver implements OnModuleInit {
   @Query((returns) => Submission)
   async getSubmissionById(@Args('id') id: string): Promise<Submission> {
     return await this.submissionService.findOne(id);
-  }
-
-  @Mutation((returns) => Submission)
-  async answerChallenge(
-    @Args('submission') submissionDto: CreateSubmisionDTO,
-  ): Promise<Submission> {
-    const submission = await this.submissionService.create(submissionDto);
-    if (submission.status !== SubmissionStatus.Error)
-      this.getCorrection(submission);
-    return submission;
   }
 
   async getCorrection(submission: Submission) {
@@ -82,6 +82,7 @@ export class SubmissionResolver implements OnModuleInit {
     submission.status = result.status;
     await this.submissionService.update(submission);
   }
+
   onModuleInit() {
     this.clientKafka.subscribeToResponseOf(this.pattern);
   }

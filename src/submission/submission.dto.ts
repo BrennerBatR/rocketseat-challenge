@@ -4,12 +4,13 @@ import { IsUUID } from 'class-validator';
 import { Submission } from './entity/submission.entity';
 
 @InputType()
-export class CreateSubmisionDTO extends OmitType(Submission, [
+export class CreateSubmissionDTO extends OmitType(Submission, [
   'id',
   'createDate',
   'updateDate',
   'grade',
   'status',
+  'challenge'
 ]) {
   @ApiProperty()
   @Field()

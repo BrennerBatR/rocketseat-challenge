@@ -49,13 +49,7 @@ export class Submission extends BaseEntity {
   @Column({ type: 'double precision', default: 0 })
   grade: number;
 
-  @IsUUID()
-  @Field()
-  @Column()
-  challengeId: string;
-
-  /*   @IsUUID()
   @Field((type) => Challenge)
   @ManyToOne((type) => Challenge, (challenge) => challenge.submissions)
-  challenge: Challenge; */
+  challenge: Challenge;
 }
