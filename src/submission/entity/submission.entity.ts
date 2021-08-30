@@ -3,11 +3,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { IsString, IsUUID } from 'class-validator';
 import { Field, ObjectType } from '@nestjs/graphql';
+import { Challenge } from 'src/challenge/entity/challenge.entity';
 
 export enum SubmissionStatus {
   Pending = 'Pending',
@@ -48,7 +50,7 @@ export class Submission extends BaseEntity {
   grade: number;
 
   @IsUUID()
-  @Field()
-  @Column()
-  challengeId: string;
+  @Field((type) => Challenge)
+  @ManyToOne((type) => Challenge, (challenge) => challenge.submissions)
+  challenge: Challenge;
 }

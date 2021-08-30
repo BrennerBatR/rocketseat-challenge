@@ -9,7 +9,16 @@ type Submission {
   repositoryUrl: String!
   status: String!
   grade: Float!
-  challengeId: String!
+  challenge: Challenge!
+}
+
+type Challenge {
+  id: String!
+  createDate: String!
+  updateDate: String!
+  title: String!
+  description: String!
+  submissions: [Submission!]
 }
 
 type Query {
