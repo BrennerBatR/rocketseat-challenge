@@ -1,6 +1,6 @@
 import { Inject, OnModuleInit } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { ClientKafka } from '@nestjs/microservices';
+import { ClientKafka, MessagePattern, Payload } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
 import { lastValueFrom } from 'rxjs';
 import { Submission, SubmissionStatus } from './entity/submission.entity';

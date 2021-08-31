@@ -34,9 +34,4 @@ export class ChallengeResolver {
   ): Promise<Challenge[]> {
     return this.challengeService.find(take, skip, search);
   }
-
-  @Query((returns) => Challenge)
-  async getChallengeById(@Args('id') id: string): Promise<Challenge> {
-    return await this.challengeService.findOne(id);
-  }
 }

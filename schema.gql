@@ -23,7 +23,6 @@ type Challenge {
 
 type Query {
   getAllChallenges(skip: Float!, take: Float!, search: String!): [Challenge!]!
-  getChallengeById(id: String!): Challenge!
   getAllSubmissions(skip: Float!, take: Float!, dateEnd: String!, dateStart: String!, status: String!): [Submission!]!
   getSubmissionById(id: String!): Submission!
 }
